@@ -6,6 +6,7 @@ public class ball : MonoBehaviour
     private bool inplay;
     public Transform player;
     [SerializeField]private float ballSpeed;
+    public GameManager gameManager;
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -25,12 +26,14 @@ public class ball : MonoBehaviour
         {
             inplay = false;
             rb.velocity = Vector2.zero;
+            gameManager.updatelives(-1);
         } 
    }
    private void OnCollisionEnter2D(Collision2D other) {
         if (other.transform.CompareTag("brick"))
-        {
+        {   
             Destroy(other.gameObject);
+            gameManager.updatescore(1);
         }
    }
     private void Jump(){
